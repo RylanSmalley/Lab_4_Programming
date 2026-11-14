@@ -1,52 +1,67 @@
-"""CS 1001 - Lab Programming 4: Searching Algorithms
 
-Friday, November 6, 2026
+"""
+CS 1001 - Lab Programming 4: Searching Algorithms
 
-Complete the TODO bodies below. Do not change the function signatures.
-Use loops and conditionals to perform the searches yourself; do not use
-list.index(), max(), or other built-in functions to perform the search.
-Do not modify the input lists.
+Complete implementations of four searching algorithms.
 """
 
 
 def find(values: list[int], target: int) -> int | None:
-    """Return the index of the first occurrence of target, or None if absent.
+    """Return the index of the first occurrence of target, or None if absent."""
 
-    Examples:
-        find([4, 9, 2, 9, 5], 9) returns 1
-        find([4, 9, 2, 9, 5], 7) returns None
-    """
-    # TODO (Task 1): Implement a search for the first occurrence.
-    raise NotImplementedError
+    for i in range(len(values)):
+        if values[i] == target:
+            return i
+
+    return None
 
 
 def is_descending(values: list[float]) -> bool:
-    """Return True if values are in strictly descending order.
+    """Return True if values are in strictly descending order."""
 
-    Each element after the first must be smaller than its predecessor.
-    Equal adjacent elements do not satisfy the condition.
-    An empty or one-element list returns True.
-    """
-    # TODO (Task 2): Check adjacent values for a violation of the rule.
-    raise NotImplementedError
+    for i in range(1, len(values)):
+        if values[i] >= values[i - 1]:
+            return False
+
+    return True
 
 
 def index_of_largest(values: list[int]) -> int | None:
-    """Return the index of the largest value, or None for an empty list.
+    """Return the index of the largest value, or None for an empty list."""
 
-    If the largest value occurs more than once, return its first index.
-    """
-    # TODO (Task 3): Track the index of the largest value seen so far.
-    raise NotImplementedError
+    if len(values) == 0:
+        return None
+
+    largest_index = 0
+
+    for i in range(1, len(values)):
+        if values[i] > values[largest_index]:
+            largest_index = i
+
+    return largest_index
 
 
 def largest_between(values: list[int], lower: int, upper: int) -> int | None:
-    """Return the index of the largest value in the inclusive index range.
+    """Return the index of the largest value in the inclusive index range."""
 
-    Return the first index within the range if the largest value repeats.
-    Return None if the list is empty, lower > upper, or no valid indexes
-    remain after adjusting the bounds. Clamp lower below 0 to 0 and upper
-    beyond the end of the list to len(values) - 1.
-    """
-    # TODO (Task 4): Adjust boundaries and search the valid index range.
-    raise NotImplementedError
+    if len(values) == 0:
+        return None
+
+    # Adjust the boundaries to stay within the list.
+    if lower < 0:
+        lower = 0
+
+    if upper >= len(values):
+        upper = len(values) - 1
+
+    # Check whether any valid indexes remain.
+    if lower > upper or lower >= len(values) or upper < 0:
+        return None
+
+    largest_index = lower
+
+    for i in range(lower + 1, upper + 1):
+        if values[i] > values[largest_index]:
+            largest_index = i
+
+    return largest_index
